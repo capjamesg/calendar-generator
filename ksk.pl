@@ -55,8 +55,6 @@ VERSION:2.0
 $calendar_events = $calendar_heading . $calendar_events;
 $calendar_events .= "END:VCALENDAR";
 
-print $ENV{"CALENDAR_FILE"};
-
-open (my $fh, '>', $ENV{"CALENDAR_FILE"}) or die "Could not open file";
+open (my $fh, '>', $ENV{KSK_CALENDAR_FILE}) or die "Could not open file";
 print $fh $calendar_events;
 close $fh;
