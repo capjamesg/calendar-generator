@@ -23,11 +23,14 @@ First, install the required dependencies for this project. The following depende
 
 You can install these dependencies using `cpan install [dependency_name]`.
 
-Next, create a `.env` file. This file must contain one value:
+Next, create a `.env` file. This file must contain the path where you want to save the `.ical` file for each script you use.
 
-    CALENDAR_FILE=/path/to/new_file
+The available values are:
 
-`CALENDAR_FILE` must point to the name of the file to which you want to write the calendar in a script. You should explicitly state the `.ics` extension at the end of the calendar path file name.
+    GOOGLE_UPDATES_CALENDAR_FILE=/path/to/new_file
+    KSK_CALENDAR_FILE=/path/to/new_file
+
+Each value must point to the name of the file to which you want to write the calendar in a script. You should explicitly state the `.ics` extension at the end of the calendar path file name. You only need to specify a value for the variable the script(s) you plan to run will use.
 
 Next, run the script that interests you. You can do this using the following command:
 
