@@ -8,8 +8,8 @@ This project contains scripts that retrieve publicly accessible web pages and re
 
 At the moment, this repository has scripts for monitoring:
 
-- Google Search algorithm updates
-- IANA Root KSK Signing ceremonies
+- [Google Search algorithm updates](https://developers.google.com/search/updates/ranking) (cal.pl)
+- [IANA Root KSK Signing ceremonies](https://www.iana.org/dnssec/ceremonies) (ksk.pl)
 
 ## Getting Started
 
