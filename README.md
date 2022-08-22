@@ -35,6 +35,14 @@ Next, run the script that interests you. You can do this using the following com
 
 This script will retrieve the events on the page that is specified in the script you have run and save them in a `.ics` file.
 
+You can add this `.ics` file to your calendar to import past events. Or, you can make the file available via a URL so you can subscribe to it. Subscribing to the calendar lets you follow new events, as long as you periodically run the script to search for new events.
+
+You may want to add an entry into your cron file so that the script updates the calendar file every day or on a cadence most suitable to your needs. For the Google and IANA updates, a daily cadence would suffice since the pages are not updated regularly.
+
+The following crontab entry will run a Perl script every day at 1am:
+
+    0 1 * * * perl /path/to/perl/file.pl
+
 ## Language
 
 This project is built in Perl.
