@@ -46,6 +46,12 @@ The following crontab entry will run a Perl script every day at 1am:
 
     0 1 * * * perl /path/to/perl/file.pl
 
+## Testing
+
+To run the tests associated with this project, you can use this command:
+
+    make test
+
 ## Language
 
 This project is built in Perl.

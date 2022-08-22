@@ -8,15 +8,7 @@ use Text::Trim qw(trim);
 use DateTime::Format::Strptime;
 use Dotenv -load;
 
-my $ua = LWP::UserAgent->new;
-
-my $request = $ua->get("https://www.iana.org/dnssec/ceremonies");
-
-my $page_dom = Mojo::DOM->new($request->content);
-
-my $events_table = $page_dom->at("table");
-
-my @events = $events_table->find("tr")->each;
+my @events = CreateCalendarFile::get_table_from_url("https://www.iana.org/dnssec/ceremonies");
 
 my $calendar_events = "";
 
@@ -34,27 +26,10 @@ for my $event (@events) {
         if ($description) {
             $description =~ s/^\s+//;
             $description =~ s/\s+$//;
-            $calendar_events .= "BEGIN:VEVENT
-DTSTAMP:$date_string
-DTSTART:$date_string
-DTEND:$date_string
-STATUS:CONFIRMED
-CATEGORIES:KSKSIGNING
-Summary:$ceremony_name
-Description:$description
-END:VEVENT
-"
+            $calendar_events .= CreateCalendarFile::create_event($date_string, $date_string, "KSKSIGNING", $ceremony_name, $description);
         }
     }
 }
 
-my $calendar_heading = "BEGIN:VCALENDAR
-VERSION:2.0
-";
-
-$calendar_events = $calendar_heading . $calendar_events;
-$calendar_events .= "END:VCALENDAR";
-
-open (my $fh, '>', $ENV{KSK_CALENDAR_FILE}) or die "Could not open file";
-print $fh $calendar_events;
-close $fh;
+$calendar_events = CreateCalendarFile::create_calendar_object($calendar_events);
+CreateCalendarFile::save_calendar_file($ENV{KSK_CALENDAR_FILE}, $calendar_events);
