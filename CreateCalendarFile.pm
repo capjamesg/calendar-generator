@@ -4,6 +4,8 @@ package CreateCalendarFile;
 
 use warnings;
 use strict;
+use LWP::UserAgent;
+use Mojo::Dom;
 
 sub get_table_from_url {
     my $ua = LWP::UserAgent->new;

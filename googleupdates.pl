@@ -8,8 +8,11 @@ use Text::Trim qw(trim);
 use DateTime::Format::Strptime;
 use Dotenv -load;
 
-sub get_ksk_events {
-    my @events = CreateCalendarFile::get_table_from_url("https://www.iana.org/dnssec/ceremonies");
+use lib "./";
+use CreateCalendarFile;
+
+sub get_google_updates {
+    my @events = CreateCalendarFile::get_table_from_url("https://developers.google.com/search/updates/ranking");
 
     my $calendar_events = "";
 
@@ -17,23 +20,24 @@ sub get_ksk_events {
         my $event_data = $event->find("td")->first;
 
         if ($event_data) {
-            my $date = $event_data->text();
+            my $date = $event_data->at("h3")->text();
             my $description = $event->find("td")->last->all_text;
-            my $ceremony_name = trim $event->find("td")->[1]->all_text;
-            my $parser = DateTime::Format::Strptime->new(pattern => '%Y-%m-%d');
+            my $parser = DateTime::Format::Strptime->new(pattern => '%B %e, %Y');
             my $datetime = $parser->parse_datetime($date);
             my $date_string = $datetime->strftime('%Y%m%d');
 
             if ($description) {
                 $description =~ s/^\s+//;
                 $description =~ s/\s+$//;
-                $calendar_events .= CreateCalendarFile::create_event($date_string, $date_string, "KSKSIGNING", $ceremony_name, $description);
             }
+
+            $calendar_events .= CreateCalendarFile::create_event($date_string, $date_string, "GOOGLEUPDATES", "Google Update - $date", $description);
+            $created_events += 1;
         }
     }
 
     $calendar_events = CreateCalendarFile::create_calendar_object($calendar_events);
-    CreateCalendarFile::save_calendar_file($ENV{KSK_CALENDAR_FILE}, $calendar_events);
+    CreateCalendarFile::save_calendar_file($ENV{GOOGLE_UPDATES_CAL_FILE}, $calendar_events);
 }
 
-get_ksk_events();
+get_google_updates();
