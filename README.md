@@ -10,6 +10,7 @@ At the moment, this repository has scripts for monitoring:
 
 - [Google Search algorithm updates](https://developers.google.com/search/updates/ranking) (cal.pl)
 - [IANA Root KSK Signing ceremonies](https://www.iana.org/dnssec/ceremonies) (ksk.pl)
+- [IndieWeb Timeline](https://indieweb.org/timeline) (indiewebevents.pl)
 
 ## Getting Started
 
@@ -29,6 +30,7 @@ The available values are:
 
     GOOGLE_UPDATES_CALENDAR_FILE=/path/to/new_file
     KSK_CALENDAR_FILE=/path/to/new_file
+    INDIEWEB_CALENDAR_FILE =/path/to/new_file
 
 Each value must point to the name of the file to which you want to write the calendar in a script. You should explicitly state the `.ics` extension at the end of the calendar path file name. You only need to specify a value for the variable the script(s) you plan to run will use.
 
@@ -40,7 +42,7 @@ This script will retrieve the events on the page that is specified in the script
 
 You can add this `.ics` file to your calendar to import past events. Or, you can make the file available via a URL so you can subscribe to it. Subscribing to the calendar lets you follow new events, as long as you periodically run the script to search for new events.
 
-You may want to add an entry into your cron file so that the script updates the calendar file every day or on a cadence most suitable to your needs. For the Google and IANA updates, a daily cadence would suffice since the pages are not updated regularly.
+You may want to add an entry into your cron file so that the script updates the calendar file every day or on a cadence most suitable to your needs. For the Google, IANA, and IndieWeb updates, a daily cadence would suffice since the pages are not updated regularly.
 
 The following crontab entry will run a Perl script every day at 1am:
 
