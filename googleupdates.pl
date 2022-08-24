@@ -3,7 +3,6 @@
 use strict;
 use warnings;
 use Mojo::DOM;
-use LWP::UserAgent;
 use Text::Trim qw(trim);
 use DateTime::Format::Strptime;
 use Dotenv -load;
@@ -15,6 +14,8 @@ sub get_google_updates {
     my @events = CreateCalendarFile::get_table_from_url("https://developers.google.com/search/updates/ranking");
 
     my $calendar_events = "";
+
+    my $created_events = 0;
 
     for my $event (@events) {
         my $event_data = $event->find("td")->first;

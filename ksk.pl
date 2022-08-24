@@ -3,15 +3,19 @@
 use strict;
 use warnings;
 use Mojo::DOM;
-use LWP::UserAgent;
 use Text::Trim qw(trim);
 use DateTime::Format::Strptime;
 use Dotenv -load;
+
+use lib "./";
+use CreateCalendarFile;
 
 sub get_ksk_events {
     my @events = CreateCalendarFile::get_table_from_url("https://www.iana.org/dnssec/ceremonies");
 
     my $calendar_events = "";
+
+    my $event_count = 0;
 
     for my $event (@events) {
         my $event_data = $event->find("td")->first;
@@ -27,7 +31,9 @@ sub get_ksk_events {
             if ($description) {
                 $description =~ s/^\s+//;
                 $description =~ s/\s+$//;
-                $calendar_events .= CreateCalendarFile::create_event($date_string, $date_string, "KSKSIGNING", $ceremony_name, $description);
+                $calendar_events .= CreateCalendarFile::create_event($date_string, $date_string, "KSKSIGNING", $ceremony_name, $description, "", $event_count);
+
+                $event_count += 1;
             }
         }
     }

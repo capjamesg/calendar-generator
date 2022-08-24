@@ -23,6 +23,7 @@ sub get_table_from_url {
 
 sub create_calendar_object {
     my $calendar_heading = "BEGIN:VCALENDAR
+PRODID:capjamesg/calendar-generator
 VERSION:2.0
 ";
     my $calendar_events = $_[0];
@@ -34,16 +35,19 @@ VERSION:2.0
 }
 
 sub create_event {
-    my $date_start = $_[0];
-    my $date_end = $_[1];
+    my $date_start = $_[0] . "T120000Z";
+    my $date_end = $_[1] . "T120000Z";
     my $categories = $_[2];
     my $summary = $_[3];
     my $description = $_[4];
+    my $rule = $_[5] || "";
+    my $uid = $_[6];
 
     my $calendar_event_item = "BEGIN:VEVENT
+UID:$uid
 DTSTAMP:$date_start
 DTSTART:$date_start
-DTEND:$date_end
+$rule
 STATUS:CONFIRMED
 CATEGORIES:$categories
 Summary:$summary
